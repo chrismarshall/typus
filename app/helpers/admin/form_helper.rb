@@ -407,8 +407,10 @@ module Admin::FormHelper
   end
 
   def attribute_disabled?(attribute)
-    accessible = @resource[:class].accessible_attributes
-    return accessible.nil? ? false : !accessible.include?(attribute)
+    unless Typus::Configuration.options[:all_attr_accessible]
+      accessible = @resource[:class].accessible_attributes
+      return accessible.nil? ? false : !accessible.include?(attribute)
+    end
   end
 
   def typus_preview(item, attribute)
